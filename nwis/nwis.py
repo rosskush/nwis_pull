@@ -8,9 +8,6 @@ try:
 except ImportError:
     # Fall back to Python 2's urllib2
     from urllib2 import urlopen
-# class pull_data:
-# 	def __init__(self, siteid,start_date,end_date,param_code):
-# 	    url = f'https://nwis.waterdata.usgs.gov/nwis/uv?cb_{self.param_code}=on&format=rdb&site_no={self.siteid}&period=&begin_date={self.start_date}&end_date={self.end_date}'
 
 class pull_data:
 	def realtime(siteid,start_date,end_date,param_code):
@@ -29,7 +26,6 @@ class pull_data:
 		    df = pd.read_table(url, skiprows=skip[0]+1,names=names)
 		    param_col = [item for item in df.columns if (param_code in item)&('cd' not in item)][0]
 		    df = df[['datetime',param_col]]
-		    print(df.head())
 		    df['datetime'] = pd.to_datetime(df['datetime'])
 		    return df
 
