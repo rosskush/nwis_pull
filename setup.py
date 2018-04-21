@@ -23,6 +23,7 @@ def run():
           description="Classes for pulling nwis data into pandas dataframes",
           author="Ross Kushnereit",
           packages=["nwis_pull"],
+          author_email = 'ross.kush@gmail.com'
           )
 if __name__ == "__main__":
     run()
