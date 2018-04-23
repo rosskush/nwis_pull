@@ -4,8 +4,8 @@ __author__ = 'rosskush'
 
 import os
 import sys
-sys.path.append(os.path.join('H:/','github','nwis_pull')) # from https://github.com/rosskush/nwis_pull
-import nwis
+sys.path.append(os.path.join('..','nwis_pull')) # from https://github.com/rosskush/nwis_pull
+import nwis_pull as nwis
 
 df = nwis.pull_data.realtime('212305157542601','2017-12-01','2017-12-28','72150')
 print(df.head())
