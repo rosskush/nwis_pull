@@ -10,7 +10,7 @@ except ImportError:
     from urllib2 import urlopen
 
 class pull_data:
-	def realtime(siteid,start_date,end_date,param_code):
+	def realtime(siteid,start_date,end_date,param_code,line_break=60):
 		    url = f'https://nwis.waterdata.usgs.gov/nwis/uv?cb_{param_code}=on&format=rdb&site_no={siteid}&period=&begin_date={start_date}&end_date={end_date}'
 		    print(url)
 
@@ -20,13 +20,14 @@ class pull_data:
 		    for line in url_file:
 		        file.append(line.decode("utf-8"))
 		        i+=1
-		        if i > 45: break # assuming the data starts before line 45
+		        if i > line_break: break # assuming the data starts before line 60
 		    skip = next(filter(lambda x: x[1].startswith('5s'), enumerate(file))) # find the line that starts with 5s
 		    names = file[skip[0]-1].split()
 		    df = pd.read_table(url, skiprows=skip[0]+1,names=names)
 		    param_col = [item for item in df.columns if (param_code in item)&('cd' not in item)][0]
-		    df = df[['datetime',param_col]]
-		    df['datetime'] = pd.to_datetime(df['datetime'])
+		    df[param_code] = df[param_col]
+		    df.index = pd.to_datetime(df['datetime'])
+		    df = df[[param_code]]
 		    return df
 
 
