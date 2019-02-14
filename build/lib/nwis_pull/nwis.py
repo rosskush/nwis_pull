@@ -52,7 +52,7 @@ class pull_data:
 
 		param_col = [item for item in df.columns if ('cd' not in item)][0]
 
-
+		df['lev_tm'].loc[pd.isnull(df['lev_tm'])] = '00:00' # defualt to 00:00
 		df.index = df.apply(lambda x: pd.to_datetime(x['lev_dt']+' '+x['lev_tm']),axis=1)
 
 		return df
